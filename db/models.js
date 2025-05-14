@@ -62,8 +62,6 @@ module.exports = {
 
     async verificarPassword(passwordIngresada, hashedPasswordAlmacenado) {
         try {
-            console.log('Contraseña ingresada para comparar:', passwordIngresada);
-            console.log('Hash almacenado para comparar:', hashedPasswordAlmacenado);
             return await bcrypt.compare(passwordIngresada, hashedPasswordAlmacenado);
         } catch (error) {
             console.error("Error al comparar contraseñas:", error);
