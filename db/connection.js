@@ -12,7 +12,8 @@ const db = new sqlite3.Database('./db/database.sqlite', (err) =>{
             cargo TEXT,
             departamento TEXT,
             telefono INTEGER,
-            correo TEXT UNIQUE
+            correo TEXT UNIQUE,
+            qr_code TEXT
         )`, (createTableErr) => {
                 if (createTableErr) {
                     console.error("Error al crear la tabla empleados:", createTableErr);
