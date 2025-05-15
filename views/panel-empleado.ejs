@@ -24,6 +24,17 @@
                     <p class="alert alert-info">Bienvenido. La información de tu nombre no se pudo cargar.</p>
                 <% } %>
             </div>
+
+            <% if (locals.qrCodeUrl) { %>
+                <div class="qr-code">
+                    <h3>Tu Código QR de Asistencia:</h3>
+                    <img src="<%= locals.qrCodeUrl %>" alt="Código QR de Asistencia" style="max-width: 200px;">
+                    <p class="mt-2">Utiliza este código QR para marcar tu asistencia.</p>
+                </div>
+            <% } else { %>
+                <div class="alert alert-warning">El código QR de asistencia no está disponible en este momento.</div>
+            <% } %>
+
         <% } else { %>
             <p class="alert alert-warning">No se pudo identificar la información del usuario.</p>
         <% } %>
