@@ -10,7 +10,7 @@ let querys = {
     deleteempleados: 'DELETE FROM empleados WHERE id = ?',
     obtenerEmpleadoPorCedula: 'SELECT id FROM empleados WHERE cedula = ?',
     getEmpleadoPorId: 'SELECT * FROM empleados WHERE id = ?',
-    getQrCodePorId: 'SELECT qr_code FROM empleados WHERE id = ?' // Nueva consulta para obtener el qr_code
+    getQrCodePorId: 'SELECT qr_code FROM empleados WHERE id = ?'
 };
 
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
             return new Promise((resolve, reject) => {
                 db.run(
                     querys.insertempleados,
-                    [usuario, hashedPassword, nombre, apellido, cedula, cargo, departamento, telefono, correo, null], // Inicializamos qr_code como null al registrar
+                    [usuario, hashedPassword, nombre, apellido, cedula, cargo, departamento, telefono, correo, null],
                     function(err) {
                         if (err) {
                             reject(err);
@@ -101,14 +101,14 @@ module.exports = {
         });
     },
 
-    async getQrCodePorId(id) { // Función para obtener el qr_code por ID
+    async getQrCodePorId(id) {
         return new Promise((resolve, reject) => {
             db.get(querys.getQrCodePorId, [id], (err, row) => {
                 if (err) {
                     reject(err);
                     return;
                 }
-                resolve(row ? row.qr_code : null); // Devuelve el qr_code o null si no se encuentra
+                resolve(row ? row.qr_code : null);
             });
         });
     },

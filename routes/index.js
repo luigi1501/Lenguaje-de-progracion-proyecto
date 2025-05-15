@@ -13,7 +13,6 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    console.log(req.body);
     if (req.body.user === process.env.USER && req.body.password === process.env.PASS) {
         console.log("Admin iniciado sesión");
         req.session.loggedIn = true;
@@ -48,7 +47,7 @@ router.get('/tabGeneral', (req, res) => {
     }
 });
 
-router.post('/guardarEmpleado', (req, res) => { // Esta ruta ya no necesita la lógica del QR
+router.post('/guardarEmpleado', (req, res) => {
     const { usuario, nombre, apellido, cedula, cargo, departamento, telefono, correo } = req.body;
 
     db.registrarEmpleado(usuario, null, nombre, apellido, parseInt(cedula), cargo, departamento, parseInt(telefono), correo)
@@ -93,7 +92,7 @@ router.post('/updateempleado/:id', async (req, res) => {
                 empleadoActualizado.departamento,
                 empleadoActualizado.telefono,
                 empleadoActualizado.correo,
-                empleadoActualizado.qr_code // Mantengo esto por si acaso quieres mostrar/editar la URL del QR
+                empleadoActualizado.qr_code
             );
             console.log("Empleado actualizado correctamente.");
             res.redirect('/tabGeneral');
