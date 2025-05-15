@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { registrarEmpleado, obtenerEmpleadoPorUsuario, verificarPassword } = require('../db/models');
+const { registrarEmpleado, obtenerEmpleadoPorUsuario, verificarPassword, getEmpleadoPorId } = require('../db/models');
+const QRCode = require('qrcode');
+const db = require('../db/connection');
 
 router.get('/login-empleado', (req, res) => {
     res.render('login-empleado', { error: req.query.error });
@@ -20,7 +22,8 @@ router.post('/login-empleado', async (req, res) => {
                 console.log('Inicio de sesión exitoso para:', usuario);
                 res.render('panel-empleado', {
                     userId: empleado.id,
-                    nombreEmpleado: empleado.nombre
+                    nombreEmpleado: empleado.nombre,
+                    qrCodeUrl: empleado.qr_code
                 });
             } else {
                 console.log('Contraseña incorrecta para empleado:', usuario);
@@ -45,8 +48,36 @@ router.post('/registro-empleado', async (req, res) => {
 
     try {
         const empleadoId = await registrarEmpleado(usuario, password, nombre, apellido, parseInt(cedula), cargo, departamento, parseInt(telefono), correo);
-        console.log('Empleado registrado correctamente.');
-        res.redirect('/auth/login-empleado');
+        console.log('Empleado registrado correctamente con ID:', empleadoId);
+
+        QRCode.toDataURL(`${empleadoId}`, async (err, url) => {
+            if (err) {
+                console.error('Error al generar el código QR:', err);
+            } else {
+                try {
+                    const empleado = await getEmpleadoPorId(empleadoId);
+                    if (empleado) {
+                        await new Promise((resolve, reject) => {
+                            db.run(`UPDATE empleados SET qr_code = ? WHERE id = ?`, [url, empleadoId], function(updateErr) {
+                                if (updateErr) {
+                                    console.error('Error al guardar la URL del código QR:', updateErr);
+                                    reject(updateErr);
+                                    return;
+                                }
+                                console.log('Código QR guardado para el empleado con ID:', empleadoId);
+                                resolve();
+                            });
+                        });
+                    } else {
+                        console.error('Empleado no encontrado para actualizar con QR.');
+                    }
+                } catch (updateErr) {
+                    console.error('Error al guardar la URL del código QR:', updateErr);
+                }
+            }
+            res.redirect('/auth/login-empleado');
+        });
+
     } catch (error) {
         console.error('Error al registrar empleado:', error);
         let errorParam = 'registrationFailed';
