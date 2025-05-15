@@ -48,18 +48,18 @@ router.get('/tabGeneral', (req, res) => {
     }
 });
 
-router.post('/guardarEmpleado', (req, res) => {
-  const { usuario, nombre, apellido, cedula, cargo, departamento, telefono, correo } = req.body;
+router.post('/guardarEmpleado', (req, res) => { // Esta ruta ya no necesita la lógica del QR
+    const { usuario, nombre, apellido, cedula, cargo, departamento, telefono, correo } = req.body;
 
-  db.registrarEmpleado(usuario, null, nombre, apellido, cedula, cargo, departamento, telefono, correo)
-      .then(() => {
-          console.log('Empleado guardado correctamente');
-          res.redirect('/tabGeneral');
-      })
-      .catch(err => {
-          console.error('Error al guardar empleado:', err);
-          res.redirect('/agregarEmpleado?error=guardarFailed');
-      });
+    db.registrarEmpleado(usuario, null, nombre, apellido, parseInt(cedula), cargo, departamento, parseInt(telefono), correo)
+        .then(() => {
+            console.log('Empleado guardado correctamente');
+            res.redirect('/tabGeneral');
+        })
+        .catch(err => {
+            console.error('Error al guardar empleado:', err);
+            res.redirect('/agregarEmpleado?error=guardarFailed');
+        });
 });
 
 router.get('/editempleado/:id', (req, res) => {
@@ -92,7 +92,8 @@ router.post('/updateempleado/:id', async (req, res) => {
                 empleadoActualizado.cargo,
                 empleadoActualizado.departamento,
                 empleadoActualizado.telefono,
-                empleadoActualizado.correo
+                empleadoActualizado.correo,
+                empleadoActualizado.qr_code // Mantengo esto por si acaso quieres mostrar/editar la URL del QR
             );
             console.log("Empleado actualizado correctamente.");
             res.redirect('/tabGeneral');
