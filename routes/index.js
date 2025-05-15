@@ -13,7 +13,6 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    console.log(req.body);
     if (req.body.user === process.env.USER && req.body.password === process.env.PASS) {
         console.log("Admin iniciado sesión");
         req.session.loggedIn = true;
