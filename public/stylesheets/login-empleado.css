@@ -12,7 +12,8 @@ body {
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
+    width: 90%;
+    max-width: 400px;
 }
 h2 {
     text-align: center;
@@ -29,7 +30,7 @@ label {
 }
 input[type="text"],
 input[type="password"] {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -63,4 +64,26 @@ button:hover {
 }
 .link-register a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 600px){
+    .container{
+        padding: 20px;
+    }
+    h2{
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+    .form-group{
+        margin-bottom: 10px;
+    }
+    label{
+        font-size: 0.9em;
+    }
+    input[type="text"],
+    input[type="password"],
+    button{
+        padding: 8px;
+        font-size: 0.85em;
+    }
 }

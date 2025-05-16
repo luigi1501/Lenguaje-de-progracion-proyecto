@@ -7,20 +7,26 @@
     <link rel="stylesheet" href="../stylesheets/paginaprin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="shortcut icon" href="../images/logo2.jpg" type="image/x-icon">
-
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="main-nav">
             <div class="logo">
                 <img src="../images/logo.jpg" alt="Logo de Alimentos del Alba">
             </div>
-            <h1>Alimentos del Alba</h1>
-            <a class="nav-btn" href="login">Iniciar Sesión Admin</a>
-            <a class="nav-btn" href="/auth/login-empleado">Iniciar Sesión Empleado</a>
-            <a class="nav-btn" href="#about">Quiénes Somos</a>
-            <a class="nav-btn" href="#mission">Misión</a>
-            <a class="nav-btn" href="#vision">Visión</a>
+            <h1 class="site-title">Alimentos del Alba</h1>
+            <button class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+            <div class="nav-links">
+                <a class="nav-btn" href="login">Iniciar Sesión Admin</a>
+                <a class="nav-btn" href="/auth/login-empleado">Iniciar Sesión Empleado</a>
+                <a href="#about">Quiénes Somos</a>
+                <a href="#mission">Misión</a>
+                <a href="#vision">Visión</a>
+            </div>
         </nav>
     </header>
 <main>
@@ -45,16 +51,29 @@
     </section>
 </main>
 
-    <footer>
-        <p>&copy; 2025 Alimentos del Alba. Todos los derechos reservados.</p>
-        <p>Contacto: soporte@miplataforma.com</p>
-        <div class="social-links">
-            <a href="https://www.facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-    </footer>
+<footer>
+    <p>&copy; 2025 Alimentos del Alba. Todos los derechos reservados.</p>
+    <p>Contacto: soporte@miplataforma.com</p>
+    <div class="social-links">
+        <a href="https://www.facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+</footer>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (hamburgerMenu && navLinks) {
+            hamburgerMenu.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                hamburgerMenu.classList.toggle('active');
+            });
+        }
+    });
+</script>
 </body>
 </html>
